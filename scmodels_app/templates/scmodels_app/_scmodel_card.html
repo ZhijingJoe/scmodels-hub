@@ -1,0 +1,31 @@
+<div class="card">
+    {% if entry.cover_image %}
+    <div class="card-cover">
+        <img src="{{ entry.cover_image.url }}" alt="{{ entry.name }}" loading="lazy">
+    </div>
+    {% endif %}
+    <span class="card-badge">{{ entry.get_model_type_display }}</span>
+    <h3><a href="{% url 'scmodel_detail' entry.slug %}">{{ entry.name }}</a></h3>
+    <p class="card-desc">{{ entry.short_description }}</p>
+    <div class="card-meta">
+        {% if entry.publication_date %}
+        <span>{{ entry.publication_date|date:"Y · m" }}</span>
+        {% endif %}
+        {% if entry.parameter_count %}
+        <span>{{ entry.parameter_count }} params</span>
+        {% endif %}
+        {% if entry.paper_url %}
+        <a href="{{ entry.paper_url }}" target="_blank" rel="noopener">Paper →</a>
+        {% endif %}
+        {% if entry.github_url %}
+        <a href="{{ entry.github_url }}" target="_blank" rel="noopener">GitHub →</a>
+        {% endif %}
+    </div>
+    {% if entry.tags.all %}
+    <div class="card-tags">
+        {% for t in entry.tags.all|slice:":4" %}
+        <span>{{ t.name }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>

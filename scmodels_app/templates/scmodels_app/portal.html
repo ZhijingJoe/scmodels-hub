@@ -1,0 +1,55 @@
+{% extends "scmodels_app/base.html" %}
+{% block title %}scModels Hub — Single-Cell Resource Portal{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="hero">
+    <h1>Single-Cell Resource Portal</h1>
+    <p class="subtitle">
+        A comprehensive navigation hub for single-cell models, datasets,
+        tutorials, papers, teams, and frontiers.
+    </p>
+    <div class="accent-line"></div>
+
+    <form method="get" action="/scmodels/">
+        <div class="search-wrap">
+            <input type="text" name="q" value="{{ query }}"
+                   placeholder="Search across all models...">
+            <button type="submit">Search</button>
+        </div>
+    </form>
+</section>
+
+<!-- Portal Grid — clickable cards -->
+<div class="container" style="padding:36px 0;">
+
+    <div class="portal-grid">
+        {% for cat in categories %}
+        <a href="{% if cat.slug == 'scmodel' %}/scmodels/{% else %}{% url 'resource_category' cat.slug %}{% endif %}"
+           class="portal-card">
+            {% if cat.background_image %}
+            <div class="portal-card-bg" style="background-image: url('{{ cat.background_image.url }}');"></div>
+            {% endif %}
+            <div class="portal-card-icon">
+                {% if cat.icon %}{{ cat.icon }}{% else %}📌{% endif %}
+            </div>
+            <h3 class="portal-card-title">{{ cat.name }}</h3>
+            <p class="portal-card-desc">{{ cat.description }}</p>
+            <div class="portal-card-footer">
+                <span class="portal-card-count">
+                    {% if cat.slug == 'scmodel' %}
+                        {{ model_entries|length }} models
+                    {% else %}
+                        {{ cat.resources.count }} resources
+                    {% endif %}
+                </span>
+                <span class="portal-card-arrow">Browse →</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

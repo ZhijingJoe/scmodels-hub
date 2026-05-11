@@ -1,0 +1,113 @@
+{% extends "scmodels_app/base.html" %}
+{% block title %}{{ entry.name }} — scModels Hub{% endblock %}
+
+{% block content %}
+<div class="container detail-wrap">
+
+<div class="detail-header">
+    <a href="/scmodels/" class="back-link">← Back to scModels</a>
+    <span class="card-badge" style="display:inline-block;">{{ entry.get_model_type_display }}</span>
+    <h1>{{ entry.name }}</h1>
+    {% if entry.cover_image %}
+    <div class="detail-cover">
+        <img src="{{ entry.cover_image.url }}" alt="{{ entry.name }}" style="width:100%; border-radius:8px; margin:16px 0;">
+    </div>
+    {% endif %}
+    <div class="meta-line">
+        {% if entry.authors %}
+        {{ entry.authors }}
+        <span style="margin:0 8px;color:var(--border-strong);">·</span>
+        {% endif %}
+        {% if entry.publication_date %}
+        {{ entry.publication_date|date:"Y-m-d" }}
+        <span style="margin:0 8px;color:var(--border-strong);">·</span>
+        {% endif %}
+        {% if entry.journal %}
+        <em>{{ entry.journal }}</em>
+        {% endif %}
+    </div>
+    {% if entry.short_description %}
+    <p class="tagline">{{ entry.short_description }}</p>
+    {% endif %}
+</div>
+
+<div class="detail-body">
+    <!-- Main content -->
+    <div class="detail-main">
+
+        {% if entry.description %}
+        <section>
+            <h2>Overview</h2>
+            <div class="description-content">{{ entry.description_html }}</div>
+        </section>
+        {% endif %}
+
+        {% if entry.paper_title %}
+        <section>
+            <h2>Publication</h2>
+            <p><strong>{{ entry.paper_title }}</strong></p>
+            {% if entry.paper_doi %}
+            <p>DOI: <a href="https://doi.org/{{ entry.paper_doi }}" target="_blank" rel="noopener">{{ entry.paper_doi }}</a></p>
+            {% endif %}
+        </section>
+        {% endif %}
+    </div>
+
+    <!-- Sidebar -->
+    <div class="detail-sidebar">
+        <h3>Links</h3>
+        {% if entry.paper_url %}
+        <a href="{{ entry.paper_url }}" target="_blank" rel="noopener" class="link-btn primary">📄 Read Paper</a>
+        {% endif %}
+        {% if entry.github_url %}
+        <a href="{{ entry.github_url }}" target="_blank" rel="noopener" class="link-btn">💻 GitHub</a>
+        {% endif %}
+        {% if entry.website_url %}
+        <a href="{{ entry.website_url }}" target="_blank" rel="noopener" class="link-btn">🌐 Website</a>
+        {% endif %}
+        {% if entry.huggingface_url %}
+        <a href="{{ entry.huggingface_url }}" target="_blank" rel="noopener" class="link-btn">🤗 HuggingFace</a>
+        {% endif %}
+        {% if entry.wechat_article_url %}
+        <a href="{{ entry.wechat_article_url }}" target="_blank" rel="noopener" class="link-btn wechat-btn">
+            📱 {% if entry.wechat_article_title %}{{ entry.wechat_article_title }}{% else %}WeChat 科普推文{% endif %}
+        </a>
+        {% endif %}
+
+        {% if entry.architecture or entry.parameter_count or entry.pretraining_data %}
+        <h3 style="margin-top:24px;">Specifications</h3>
+        <ul class="spec-list">
+            {% if entry.architecture %}
+            <li><span class="spec-label">Architecture</span><span class="spec-value">{{ entry.architecture }}</span></li>
+            {% endif %}
+            {% if entry.parameter_count %}
+            <li><span class="spec-label">Parameters</span><span class="spec-value">{{ entry.parameter_count }}</span></li>
+            {% endif %}
+            {% if entry.embedding_dim %}
+            <li><span class="spec-label">Embedding Dim</span><span class="spec-value">{{ entry.embedding_dim }}</span></li>
+            {% endif %}
+            {% if entry.context_length %}
+            <li><span class="spec-label">Context Length</span><span class="spec-value">{{ entry.context_length }}</span></li>
+            {% endif %}
+            {% if entry.pretraining_data %}
+            <li><span class="spec-label">Pretraining Data</span><span class="spec-value">{{ entry.pretraining_data }}</span></li>
+            {% endif %}
+            {% if entry.modality %}
+            <li><span class="spec-label">Modality</span><span class="spec-value">{{ entry.get_modality_display }}</span></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+
+        {% if entry.tags.all %}
+        <h3 style="margin-top:24px;">Tags</h3>
+        <div class="tag-row">
+            {% for t in entry.tags.all %}
+            <a href="/?tag={{ t.name }}">{{ t.name }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+</div>
+{% endblock %}

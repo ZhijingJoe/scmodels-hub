@@ -1,0 +1,81 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde@2/dist/easymde.min.css">
+<script src="https://cdn.jsdelivr.net/npm/easymde@2/dist/easymde.min.js"></script>
+<style>
+    .EasyMDEContainer .editor-toolbar { border-radius: 6px 6px 0 0; }
+    .EasyMDEContainer .CodeMirror {
+        border-radius: 0 0 6px 6px;
+        min-height: 420px;
+        font-size: .92rem;
+        line-height: 1.7;
+    }
+    .editor-toolbar button.active { background: var(--accent-light, #e8eef3); }
+</style>
+{% endblock %}
+
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+<script>
+(function() {
+    // Wait for DOM and EasyMDE
+    const init = function() {
+        const textarea = document.querySelector('#id_description');
+        if (!textarea) return;
+        if (textarea._easymde) return;
+
+        const easymde = new EasyMDE({
+            element: textarea,
+            spellChecker: false,
+            placeholder: 'Write in Markdown...\n\n## Heading\n\n**bold** *italic*\n\nDrag & drop images here\n\n- list item',
+            toolbar: [
+                'heading', 'bold', 'italic', '|',
+                'quote', 'unordered-list', 'ordered-list', '|',
+                'link', {
+                    name: 'image',
+                    action: EasyMDE.drawImage,
+                    className: 'fa fa-picture-o',
+                    title: 'Insert Image URL',
+                }, '|',
+                'preview', 'side-by-side', 'fullscreen', '|',
+                'guide'
+            ],
+            uploadImage: true,
+            imageUploadFunction: function(file, onSuccess, onError) {
+                const formData = new FormData();
+                formData.append('image', file);
+                fetch('/api/upload-image/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value }
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        onSuccess(data.url);
+                    } else {
+                        onError(data.error || 'Upload failed');
+                    }
+                })
+                .catch(e => onError(e.message));
+            },
+            imageTexts: {
+                sbInit: 'Attach images by drag & drop or paste from clipboard.',
+                sbOnDragEnter: 'Drop image to upload',
+            }
+        });
+        textarea._easymde = easymde;
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        // Django admin might load this before DOM ready
+        setTimeout(init, 200);
+    }
+})();
+</script>
+{% endblock %}
