@@ -9,7 +9,7 @@ from .models import AnalysisJob
 class AnalysisJobAdmin(admin.ModelAdmin):
     list_display = [
         'original_filename', 'file_size_display', 'status_badge',
-        'n_cells', 'n_clusters', 'created_at', 'actions'
+        'n_cells', 'n_clusters', 'created_at', 'view_link'
     ]
     list_filter = ['status', 'created_at']
     search_fields = ['original_filename']
@@ -91,8 +91,8 @@ class AnalysisJobAdmin(admin.ModelAdmin):
             obj.n_neighbors, obj.resolution, obj.n_markers
         )
 
-    @admin.display(description='Actions')
-    def actions(self, obj):
+    @admin.display(description='View')
+    def view_link(self, obj):
         result_url = reverse('analysis_result', args=[obj.id])
         return format_html(
             '<a href="{}" target="_blank">View</a>',
