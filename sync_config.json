@@ -1,0 +1,172 @@
+{
+  "_description": "Topic keyword → ModelEntry mapping for auto-sync. Keywords matched case-insensitive against episode core topics.",
+  "models": {
+    "scGPT": {
+      "name": "scGPT",
+      "keywords": ["scgpt", "scGPT", "bowang"],
+      "model_type": "foundation",
+      "modality": "scrna",
+      "short_description": "Generative pre-trained transformer for single-cell biology. Pre-trained on 33M+ cells from CELLxGENE.",
+      "paper_title": "scGPT: Toward Building a Foundation Model for Single-Cell Multi-Omics",
+      "paper_url": "https://www.nature.com/articles/s41592-024-02201-0",
+      "github_url": "https://github.com/bowang-lab/scGPT",
+      "authors": "Haotian Cui, Chloe Wang, Bo Wang et al.",
+      "journal": "Nature Methods (2024)",
+      "architecture": "Transformer (GPT-style)",
+      "parameter_count": "~100M",
+      "pretraining_data": "33M+ cells from CELLxGENE Census"
+    },
+    "Geneformer": {
+      "name": "Geneformer",
+      "keywords": ["geneformer", "排序学习", "transfer learning", "theodoris"],
+      "model_type": "geneformer",
+      "modality": "scrna",
+      "short_description": "Context-aware foundation model for gene network predictions. Transfer learning from 30M single-cell transcriptomes.",
+      "paper_title": "Transfer learning enables predictions in network biology",
+      "paper_url": "https://www.nature.com/articles/s41586-023-06139-9",
+      "github_url": "https://github.com/ctheodoris/Geneformer",
+      "authors": "Christina Theodoris et al.",
+      "journal": "Nature (2023)",
+      "architecture": "Transformer (rank-based attention)",
+      "parameter_count": "~100M",
+      "pretraining_data": "30M single-cell transcriptomes (Genecorpus-30M)"
+    },
+    "scFoundation": {
+      "name": "scFoundation",
+      "keywords": ["scfoundation", "scFoundation", "BGI", "biomap", "50M"],
+      "model_type": "foundation",
+      "modality": "scrna",
+      "short_description": "Large-scale pre-trained model for single-cell transcriptomics with 100M parameters, trained on 50M+ cells.",
+      "paper_title": "Large-scale foundation model on single-cell transcriptomics",
+      "paper_url": "https://www.nature.com/articles/s41592-024-02305-7",
+      "github_url": "https://github.com/biomap-research/scFoundation",
+      "authors": "BGI Research et al.",
+      "journal": "Nature Methods (2024)",
+      "architecture": "Transformer (asymmetric encoder-decoder)",
+      "parameter_count": "~100M",
+      "pretraining_data": "50M+ cells"
+    },
+    "scBERT": {
+      "name": "scBERT",
+      "keywords": ["scbert", "scBERT", "tencent", "BERT", "细胞类型注释", "cell type annotation"],
+      "model_type": "foundation",
+      "modality": "scrna",
+      "short_description": "BERT-based pre-trained model for single-cell transcriptomics with gene-level tokenization.",
+      "paper_title": "scBERT as a large-scale pretrained deep language model for cell type annotation",
+      "paper_url": "https://www.nature.com/articles/s42256-022-00534-z",
+      "github_url": "https://github.com/TencentAILabHealthcare/scBERT",
+      "authors": "Tencent AI Lab et al.",
+      "journal": "Nature Machine Intelligence (2022)",
+      "architecture": "BERT (Performer-based)",
+      "parameter_count": "~100M",
+      "pretraining_data": "Large-scale scRNA-seq data"
+    },
+    "Stack": {
+      "name": "Stack",
+      "keywords": ["stack", "in-context", "ARC", "perturbation", "扰动"],
+      "model_type": "foundation",
+      "modality": "scrna",
+      "short_description": "In-context learning for single-cell biology. Zero-shot perturbation prediction across cell types.",
+      "paper_title": "Stack: In-Context Learning of Single-Cell Biology",
+      "paper_url": "https://www.biorxiv.org/content/10.1101/2026.01.09.698608",
+      "github_url": "https://github.com/ArcInstitute/stack",
+      "authors": "Arc Institute et al.",
+      "journal": "bioRxiv (2026)",
+      "architecture": "Transformer (tabular attention)",
+      "parameter_count": "~300M",
+      "pretraining_data": "149M human single cells"
+    },
+    "scBaseCount": {
+      "name": "scBaseCount",
+      "keywords": ["scbasecount", "scBaseCount", "策展", "curation", "5亿"],
+      "model_type": "foundation",
+      "modality": "scrna",
+      "short_description": "AI-powered automated curation platform for 500M+ single-cell data.",
+      "paper_title": "",
+      "paper_url": "",
+      "github_url": "",
+      "authors": "",
+      "journal": ""
+    },
+    "Virtual Cell": {
+      "name": "Virtual Cell Models",
+      "keywords": ["virtual cell", "虚拟细胞", "generative", "生成"],
+      "model_type": "virtual_cell",
+      "modality": "scrna",
+      "short_description": "Generative models for simulating single-cell responses to perturbations.",
+      "paper_title": "Building virtual cells with generative AI",
+      "paper_url": "https://www.biorxiv.org/content/10.1101/2024.01.01.573790",
+      "github_url": "",
+      "authors": "",
+      "journal": ""
+    }
+  },
+  "concept_topics": {
+    "tokenization": {
+      "name_prefix": "Tokenization",
+      "model_type": "other",
+      "modality": "scrna",
+      "short_description": "Strategies for tokenizing gene expression data for single-cell foundation models."
+    },
+    "零样本": {
+      "name_prefix": "Zero-Shot",
+      "model_type": "other",
+      "modality": "scrna",
+      "short_description": "Zero-shot learning in single-cell foundation models."
+    },
+    "批次效应": {
+      "name_prefix": "Batch Effects",
+      "model_type": "other",
+      "modality": "scrna",
+      "short_description": "Understanding and mitigating batch effects in single-cell data."
+    },
+    "幻觉": {
+      "name_prefix": "Hallucinations",
+      "model_type": "other",
+      "modality": "scrna",
+      "short_description": "Hallucination and uncertainty in single-cell AI models."
+    },
+    "药物发现": {
+      "name_prefix": "Drug Discovery",
+      "model_type": "perturbation",
+      "modality": "scrna",
+      "short_description": "Applications of single-cell models in drug discovery."
+    },
+    "NLP": {
+      "name_prefix": "NLP",
+      "model_type": "other",
+      "modality": "scrna",
+      "short_description": "The analogy between natural language and cellular gene expression."
+    },
+    "中国团队": {
+      "name_prefix": "Chinese Teams",
+      "model_type": "other",
+      "modality": "scrna",
+      "short_description": "Contributions from Chinese research teams in single-cell AI."
+    },
+    "对比学习": {
+      "name_prefix": "Contrastive Learning",
+      "model_type": "other",
+      "modality": "scrna",
+      "short_description": "Contrastive learning approaches in single-cell models."
+    },
+    "多模态": {
+      "name_prefix": "Multimodal",
+      "model_type": "multimodal",
+      "modality": "multiome",
+      "short_description": "Multimodal single-cell models integrating multiple data types."
+    },
+    "入门": {
+      "name_prefix": "Introduction",
+      "model_type": "other",
+      "modality": "scrna",
+      "short_description": "Introduction to single-cell foundation models."
+    },
+    "评估": {
+      "name_prefix": "Evaluation",
+      "model_type": "other",
+      "modality": "scrna",
+      "short_description": "How to evaluate single-cell foundation models."
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{% extends "scmodels_app/base.html" %}
+{% block title %}Analysis Result — scAnalysis{% endblock %}
+
+{% block content %}
+
+<div class="cat-detail-hero">
+    <span style="font-size:2.5rem;">🔬</span>
+    <h1>{{ job.original_filename }}</h1>
+    <p style="color:var(--text-muted);">
+        {% if job.status == 'completed' %}
+        {{ job.n_cells }} cells · {{ job.n_clusters }} clusters
+        {% elif job.status == 'running' %}
+        Analysis in progress...
+        {% elif job.status == 'failed' %}
+        Analysis failed
+        {% else %}
+        Queued...
+        {% endif %}
+    </p>
+    <div class="accent-line"></div>
+    <a href="{% url 'analysis_upload' %}" class="cat-back">← Back to Analysis</a>
+</div>
+
+<div class="container" style="padding:24px 28px 40px;">
+
+    {% if job.status == 'running' or job.status == 'pending' %}
+    <div style="text-align:center;padding:60px 0;">
+        <p style="font-size:1.2rem;color:var(--text-muted);">⏳ Running analysis...</p>
+        <p style="font-size:.85rem;color:var(--text-faint);margin-top:8px;">
+            This may take a few minutes. Refresh to check progress.
+        </p>
+        <script>setTimeout(function(){location.reload();}, 5000);</script>
+    </div>
+
+    {% elif job.status == 'failed' %}
+    <div style="background:#f8d7da;color:#721c24;padding:20px;border-radius:8px;margin:20px 0;">
+        <strong>Error:</strong>
+        <pre style="margin-top:10px;font-size:.82rem;white-space:pre-wrap;">{{ job.error_message }}</pre>
+    </div>
+
+    {% elif job.status == 'completed' %}
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+        <span style="background:var(--accent-pale);padding:6px 14px;border-radius:20px;font-size:.82rem;">
+            {{ job.n_cells }} cells
+        </span>
+        <span style="background:var(--accent-pale);padding:6px 14px;border-radius:20px;font-size:.82rem;">
+            {{ job.n_genes }} genes
+        </span>
+        <span style="background:var(--accent-pale);padding:6px 14px;border-radius:20px;font-size:.82rem;">
+            {{ job.n_clusters }} clusters
+        </span>
+        <span style="background:var(--accent-pale);padding:6px 14px;border-radius:20px;font-size:.82rem;">
+            Res: {{ job.resolution }}
+        </span>
+    </div>
+
+    <!-- QC -->
+    <div class="section-head"><h2>Quality Control</h2></div>
+    <img src="{{ job.result_url }}qc_violin.png" style="max-width:100%;border-radius:8px;box-shadow:var(--shadow-sm);">
+
+    <!-- UMAP -->
+    <div class="section-head"><h2>UMAP Clustering</h2></div>
+    <img src="{{ job.result_url }}umap.png" style="max-width:100%;border-radius:8px;box-shadow:var(--shadow-sm);">
+
+    <!-- Dotplot -->
+    <div class="section-head"><h2>Marker Gene Dotplot</h2></div>
+    <img src="{{ job.result_url }}dotplot.png" style="max-width:100%;border-radius:8px;box-shadow:var(--shadow-sm);">
+
+    <!-- Violin -->
+    <div class="section-head"><h2>Violin Plot (Top Markers)</h2></div>
+    <img src="{{ job.result_url }}vlnplot.png" style="max-width:100%;border-radius:8px;box-shadow:var(--shadow-sm);">
+
+    <!-- Heatmap -->
+    <div class="section-head"><h2>Heatmap</h2></div>
+    <img src="{{ job.result_url }}heatmap.png" style="max-width:100%;border-radius:8px;box-shadow:var(--shadow-sm);">
+
+    <!-- Volcano -->
+    <div class="section-head"><h2>Volcano Plot (Cluster 0 vs Rest)</h2></div>
+    <img src="{{ job.result_url }}volcano.png" style="max-width:100%;border-radius:8px;box-shadow:var(--shadow-sm);">
+
+    <!-- Marker table (CSV download) -->
+    <div class="section-head"><h2>Marker Genes</h2></div>
+    <p style="margin-bottom:8px;"><a href="{{ job.result_url }}markers.csv" class="link-btn" download>📥 Download markers.csv</a></p>
+
+    {% endif %}
+</div>
+
+{% endblock %}

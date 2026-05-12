@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('scmodels_app.urls')),
+    path('analysis/', include('analysis.urls')),
 ]
 
 if settings.DEBUG:
