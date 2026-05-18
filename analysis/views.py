@@ -1,10 +1,12 @@
 import threading
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import AnalysisJob
 from .pipeline import run_analysis
 
 
+@login_required
 def upload(request):
     if request.method == 'POST' and request.FILES.get('file'):
         f = request.FILES['file']
@@ -31,6 +33,7 @@ def upload(request):
     return render(request, 'analysis/upload.html', {'jobs': jobs})
 
 
+@login_required
 def result(request, job_id):
     job = get_object_or_404(AnalysisJob, id=job_id)
     return render(request, 'analysis/result.html', {'job': job})

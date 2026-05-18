@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'scmodels_app',
     'analysis',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +121,12 @@ STATIC_URL = 'static/'
 # Media files (user uploads)
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
+
+LOGIN_URL = '/accounts/login/'
+
+# Email (configure SMTP for production)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # prints to console
+DEFAULT_FROM_EMAIL = 'noreply@entropyspace.top'
 
 # Upload limits
 DATA_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024  # 50MB

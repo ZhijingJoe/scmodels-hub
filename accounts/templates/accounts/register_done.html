@@ -1,0 +1,27 @@
+{% extends "scmodels_app/base.html" %}
+{% block title %}Check Your Email — scModels Hub{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width:500px;padding:60px 24px;text-align:center;">
+
+    <p style="font-size:3rem;">📧</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;color:var(--accent);margin-bottom:12px;">
+        Verify Your Email
+    </h2>
+    <p style="color:var(--text-muted);line-height:1.7;">
+        A verification link has been sent to<br>
+        <strong>{{ email }}</strong>
+    </p>
+
+    <div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:8px;padding:16px;margin:20px 0;text-align:left;">
+        <p style="font-size:.8rem;color:var(--text-faint);margin-bottom:8px;">📋 Dev mode — verification link:</p>
+        <a href="{{ verify_url }}" style="font-size:.85rem;word-break:break-all;color:var(--accent-light);">
+            {{ verify_url }}
+        </a>
+    </div>
+
+    <p style="font-size:.85rem;color:var(--text-muted);">
+        Click the link above to activate your account, then <a href="{% url 'login' %}">sign in →</a>
+    </p>
+</div>
+{% endblock %}
